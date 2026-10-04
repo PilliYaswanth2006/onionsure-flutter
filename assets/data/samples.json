@@ -1,0 +1,288 @@
+{
+  "dataset_version": "1.0",
+  "dataset_name": "SIH26031 Onion Grading Prototype Samples",
+  "problem_statement_id": "26031",
+  "project_title": "Mobile Computer Vision & Metric Calibration for Offline Onion Grading",
+  "description": "Precomputed demonstration sample dataset for the SIH26031 onion quality assessment and grading prototype.",
+  "data_provenance": {
+    "type": "prepared_demo",
+    "purpose": "Prototype workflow demonstration",
+    "live_ai_inference": false,
+    "validated_production_dataset": false,
+    "note": "The annotated images are prepared visual result images. Structured values in this JSON are the source of truth for prototype aggregation and reporting."
+  },
+  "category_definitions": {
+    "healthy": "No visible external defect detected in the prepared demonstration result.",
+    "surface_defect": "Visible surface damage or defect.",
+    "severe_defect": "Severe visible defect requiring rejection or further review according to the configured prototype rules.",
+    "sprouting": "Visible sprouting.",
+    "undersized": "Onion classified as undersized in the prepared demonstration result."
+  },
+  "samples": [
+    {
+      "sample_id": "S01",
+      "name": "Healthy Sample",
+      "description": "Sample predominantly containing onions without visible external defects.",
+      "raw_image": "assets/images/raw/healthy.png",
+      "annotated_image": "assets/images/annoted/healthy.png",
+      "capture": {
+        "status": "accepted",
+        "image_quality": "good",
+        "reference_visible": true,
+        "calibration_status": "demo_estimate"
+      },
+      "analysis": {
+        "status": "precomputed_demo_result",
+        "total_onions": 26,
+        "category_counts": {
+          "healthy": 17,
+          "surface_defect": 7,
+          "severe_defect": 2,
+          "sprouting": 0,
+          "undersized": 0
+        },
+        "diameters_mm": [
+          54,
+          52,
+          56,
+          50,
+          61,
+          48,
+          53,
+          49,
+          58,
+          47,
+          51,
+          45,
+          62,
+          50,
+          55,
+          57,
+          53,
+          48,
+          56,
+          49,
+          51,
+          46,
+          50,
+          59,
+          63,
+          55
+        ],
+        "measurement_status": "demo_estimate"
+      }
+    },
+    {
+      "sample_id": "S02",
+      "name": "Mixed Quality Sample",
+      "description": "Sample containing multiple visible quality conditions.",
+      "raw_image": "assets/images/raw/mixed_quality.png",
+      "annotated_image": "assets/images/annoted/mixed_quality.png",
+      "capture": {
+        "status": "accepted",
+        "image_quality": "good",
+        "reference_visible": true,
+        "calibration_status": "demo_estimate"
+      },
+      "analysis": {
+        "status": "precomputed_demo_result",
+        "total_onions": 26,
+        "category_counts": {
+          "healthy": 13,
+          "surface_defect": 5,
+          "severe_defect": 0,
+          "sprouting": 2,
+          "undersized": 6
+        },
+        "diameters_mm": [
+          62,
+          54,
+          50,
+          58,
+          53,
+          49,
+          61,
+          45,
+          52,
+          48,
+          47,
+          46,
+          44,
+          50,
+          51,
+          43,
+          48,
+          50,
+          46,
+          51,
+          36,
+          38,
+          39,
+          40,
+          37,
+          42
+        ],
+        "measurement_status": "demo_estimate"
+      }
+    },
+    {
+      "sample_id": "S03",
+      "name": "Sprouting Sample",
+      "description": "Sample containing visibly sprouted onions and undersized onions.",
+      "raw_image": "assets/images/raw/sprouting.png",
+      "annotated_image": "assets/images/annoted/sprouting.png",
+      "capture": {
+        "status": "accepted",
+        "image_quality": "good",
+        "reference_visible": true,
+        "calibration_status": "demo_estimate"
+      },
+      "analysis": {
+        "status": "precomputed_demo_result",
+        "total_onions": 26,
+        "category_counts": {
+          "healthy": 14,
+          "surface_defect": 0,
+          "severe_defect": 0,
+          "sprouting": 6,
+          "undersized": 6
+        },
+        "diameters_mm": [
+          54,
+          57,
+          52,
+          50,
+          56,
+          61,
+          49,
+          53,
+          47,
+          55,
+          49,
+          47,
+          46,
+          44,
+          45,
+          51,
+          52,
+          48,
+          50,
+          51,
+          36,
+          38,
+          39,
+          40,
+          37,
+          42
+        ],
+        "measurement_status": "demo_estimate"
+      }
+    },
+    {
+      "sample_id": "S04",
+      "name": "Surface Defect Sample",
+      "description": "Sample containing visible surface damage and other visible quality conditions.",
+      "raw_image": "assets/images/raw/surface_defects.png",
+      "annotated_image": "assets/images/annoted/surface_defects.png",
+      "capture": {
+        "status": "accepted",
+        "image_quality": "good",
+        "reference_visible": true,
+        "calibration_status": "demo_estimate"
+      },
+      "analysis": {
+        "status": "precomputed_demo_result",
+        "total_onions": 26,
+        "category_counts": {
+          "healthy": 13,
+          "surface_defect": 7,
+          "severe_defect": 1,
+          "sprouting": 0,
+          "undersized": 5
+        },
+        "diameters_mm": [
+          54,
+          57,
+          52,
+          50,
+          56,
+          61,
+          48,
+          51,
+          46,
+          55,
+          49,
+          52,
+          47,
+          45,
+          51,
+          43,
+          50,
+          48,
+          46,
+          42,
+          39,
+          41,
+          45,
+          48,
+          47,
+          44
+        ],
+        "measurement_status": "demo_estimate"
+      }
+    },
+    {
+      "sample_id": "S05",
+      "name": "Undersized Sample",
+      "description": "Sample containing visibly undersized onions.",
+      "raw_image": "assets/images/raw/undersized.png",
+      "annotated_image": "assets/images/annoted/undersized.png",
+      "capture": {
+        "status": "accepted",
+        "image_quality": "good",
+        "reference_visible": true,
+        "calibration_status": "demo_estimate"
+      },
+      "analysis": {
+        "status": "precomputed_demo_result",
+        "total_onions": 26,
+        "category_counts": {
+          "healthy": 19,
+          "surface_defect": 0,
+          "severe_defect": 0,
+          "sprouting": 0,
+          "undersized": 7
+        },
+        "diameters_mm": [
+          54,
+          53,
+          51,
+          50,
+          52,
+          49,
+          48,
+          50,
+          51,
+          49,
+          47,
+          46,
+          48,
+          50,
+          47,
+          45,
+          44,
+          43,
+          46,
+          36,
+          38,
+          39,
+          40,
+          37,
+          42,
+          35
+        ],
+        "measurement_status": "demo_estimate"
+      }
+    }
+  ]
+}
