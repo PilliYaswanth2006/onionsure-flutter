@@ -29,3 +29,5 @@ flutter:
     - assets/data/samples.json
     - assets/images/raw/
     - assets/images/annoted/
+    - assets/images/app_logo.png
+    - assets/images/onionsure_wordmark.png

@@ -45,8 +45,7 @@ class StatCard extends StatelessWidget {
                   color: AppColors.navyMuted,
                 ),
               ),
-              if (icon != null)
-                Icon(icon, size: 16, color: effectiveColor),
+              if (icon != null) Icon(icon, size: 16, color: effectiveColor),
             ],
           ),
           const SizedBox(height: 6),

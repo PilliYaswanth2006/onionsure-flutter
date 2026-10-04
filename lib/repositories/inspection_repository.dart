@@ -40,7 +40,8 @@ class InspectionRepository {
   Future<void> saveInspection(InspectionModel inspection) async {
     final all = await getAllInspections();
     final updated = List<InspectionModel>.from(all);
-    final existingIndex = updated.indexWhere((i) => i.inspectionId == inspection.inspectionId);
+    final existingIndex =
+        updated.indexWhere((i) => i.inspectionId == inspection.inspectionId);
 
     if (existingIndex >= 0) {
       updated[existingIndex] = inspection;

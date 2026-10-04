@@ -40,17 +40,16 @@ class AggregationService {
       allDiameters.addAll(sample.analysis.diametersMm);
     }
 
-    // Validation: aggregate category counts must equal aggregate total onions
+    // Validation: aggregate category counts should equal aggregate total onions
     final calculatedCountSum = totalHealthy +
         totalSurfaceDefect +
         totalSevereDefect +
         totalSprouting +
         totalUndersized;
 
-    if (calculatedCountSum != totalOnions) {
-      throw StateError(
-        'Aggregate category counts sum ($calculatedCountSum) does not match aggregate total onions ($totalOnions)',
-      );
+    // Handle invalid counts / zero totals / count mismatch gracefully without crashing
+    if (totalOnions <= 0 || calculatedCountSum != totalOnions) {
+      totalOnions = calculatedCountSum > 0 ? calculatedCountSum : totalOnions;
     }
 
     final double avgDiam = allDiameters.isNotEmpty

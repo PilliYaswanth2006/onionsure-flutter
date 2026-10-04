@@ -21,7 +21,7 @@ class OnionAssayApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Onion Quality Assay (SIH26031)',
+      title: 'OnionSure',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
       home: HomeScreen(inspectionRepository: inspectionRepository),

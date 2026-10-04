@@ -1,12 +1,14 @@
 class AppConstants {
   static const String problemStatementId = 'SIH26031';
-  static const String projectTitle = 'Mobile Computer Vision & Metric Calibration for Offline Onion Grading';
+  static const String projectTitle =
+      'Mobile Computer Vision & Metric Calibration for Offline Onion Grading';
   static const String problemDescription =
       'Quality assessment and grading of onions are often subjective and vary across procurement centers, resulting in disputes and inconsistencies.';
 
   // Disclaimers & Honesty notices
-  static const String preparedResultNotice = 'Prepared CV Result — Prototype Demo';
-  static const String demoMeasurementNotice = 'Demo Measurement: Production deployment requires validated metric calibration.';
+  static const String preparedResultNotice = 'Prepared Demo Results';
+  static const String demoMeasurementNotice =
+      'Demo Measurement: Production deployment requires validated metric calibration.';
   static const String internalRotNotice =
       'Internal condition cannot be established from ordinary RGB imagery alone. Field assay requires physical verification.';
   static const String samplingDisclaimer =

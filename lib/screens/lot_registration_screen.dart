@@ -37,7 +37,8 @@ class _LotRegistrationScreenState extends State<LotRegistrationScreen> {
     _lotIdCtrl = TextEditingController(text: AppConstants.defaultLotId);
     _farmerNameCtrl = TextEditingController(text: AppConstants.defaultFarmer);
     _centreCtrl = TextEditingController(text: AppConstants.defaultCentre);
-    _inspectorIdCtrl = TextEditingController(text: AppConstants.defaultInspector);
+    _inspectorIdCtrl =
+        TextEditingController(text: AppConstants.defaultInspector);
     _varietyCtrl = TextEditingController(text: AppConstants.defaultVariety);
     _quantityCtrl = TextEditingController(text: AppConstants.defaultQuantity);
   }
@@ -83,6 +84,33 @@ class _LotRegistrationScreenState extends State<LotRegistrationScreen> {
       body: Column(
         children: [
           const ProgressStepper(currentStep: 1),
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+            color: AppColors.surfaceMuted,
+            child: const Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Step 1 of 5 · Lot Registration',
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.tealDark,
+                  ),
+                ),
+                SizedBox(height: 2),
+                Text(
+                  'Verify the lot, producer, procurement centre and inspector details before sampling.',
+                  style: TextStyle(
+                    fontSize: 11,
+                    color: AppColors.navyMuted,
+                    height: 1.3,
+                  ),
+                ),
+              ],
+            ),
+          ),
           const Divider(height: 1, color: AppColors.border),
           Expanded(
             child: SingleChildScrollView(
@@ -92,97 +120,102 @@ class _LotRegistrationScreenState extends State<LotRegistrationScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      padding: const EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        color: AppColors.tealLight,
-                        borderRadius: BorderRadius.circular(8),
-                        border: Border.all(color: AppColors.tealBorder),
+                    // Group 1: Produce Details
+                    _buildSectionHeader('Produce Details'),
+                    _buildGroupCard([
+                      _buildField(
+                        label: 'Lot ID',
+                        controller: _lotIdCtrl,
+                        icon: Icons.tag,
+                        validator: (val) =>
+                            val == null || val.isEmpty ? 'Required' : null,
                       ),
-                      child: const Row(
-                        children: [
-                          Icon(Icons.inventory_2_outlined, color: AppColors.tealDark, size: 20),
-                          SizedBox(width: 8),
-                          Expanded(
-                            child: Text(
-                              'Register procurement lot and farmer credentials for offline field assaying.',
+                      const SizedBox(height: 12),
+                      _buildField(
+                        label: 'Onion Variety',
+                        controller: _varietyCtrl,
+                        icon: Icons.grain,
+                        validator: (val) =>
+                            val == null || val.isEmpty ? 'Required' : null,
+                      ),
+                      const SizedBox(height: 12),
+                      _buildField(
+                        label: 'Lot Quantity',
+                        controller: _quantityCtrl,
+                        icon: Icons.scale,
+                        validator: (val) =>
+                            val == null || val.isEmpty ? 'Required' : null,
+                      ),
+                    ]),
+                    const SizedBox(height: 16),
+
+                    // Group 2: Farmer & Location
+                    _buildSectionHeader('Farmer & Location'),
+                    _buildGroupCard([
+                      _buildField(
+                        label: 'Farmer / Producer Name',
+                        controller: _farmerNameCtrl,
+                        icon: Icons.person_outline,
+                        validator: (val) =>
+                            val == null || val.isEmpty ? 'Required' : null,
+                      ),
+                      const SizedBox(height: 12),
+                      _buildField(
+                        label: 'Procurement Centre / APMC',
+                        controller: _centreCtrl,
+                        icon: Icons.location_on_outlined,
+                        validator: (val) =>
+                            val == null || val.isEmpty ? 'Required' : null,
+                      ),
+                    ]),
+                    const SizedBox(height: 16),
+
+                    // Group 3: Assay Credentials
+                    _buildSectionHeader('Assay Credentials'),
+                    _buildGroupCard([
+                      _buildField(
+                        label: 'Inspection ID',
+                        controller: _inspectionIdCtrl,
+                        icon: Icons.qr_code,
+                        helperText: 'Auto-generated',
+                        validator: (val) =>
+                            val == null || val.isEmpty ? 'Required' : null,
+                      ),
+                      const SizedBox(height: 12),
+                      _buildField(
+                        label: 'Inspector ID',
+                        controller: _inspectorIdCtrl,
+                        icon: Icons.badge_outlined,
+                        validator: (val) =>
+                            val == null || val.isEmpty ? 'Required' : null,
+                      ),
+                    ]),
+                    const SizedBox(height: 24),
+
+                    // Action Button
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(0, 48),
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                        ),
+                        onPressed: _proceedToSampling,
+                        child: const Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Start Sampling',
                               style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                                color: AppColors.tealDark,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    _buildField(
-                      label: 'Inspection ID',
-                      controller: _inspectionIdCtrl,
-                      icon: Icons.qr_code,
-                      validator: (val) => val == null || val.isEmpty ? 'Required' : null,
-                    ),
-                    const SizedBox(height: 12),
-                    _buildField(
-                      label: 'Lot ID',
-                      controller: _lotIdCtrl,
-                      icon: Icons.tag,
-                      validator: (val) => val == null || val.isEmpty ? 'Required' : null,
-                    ),
-                    const SizedBox(height: 12),
-                    _buildField(
-                      label: 'Farmer / Producer Name',
-                      controller: _farmerNameCtrl,
-                      icon: Icons.person_outline,
-                      validator: (val) => val == null || val.isEmpty ? 'Required' : null,
-                    ),
-                    const SizedBox(height: 12),
-                    _buildField(
-                      label: 'Procurement Centre / APMC Mandi',
-                      controller: _centreCtrl,
-                      icon: Icons.location_on_outlined,
-                      validator: (val) => val == null || val.isEmpty ? 'Required' : null,
-                    ),
-                    const SizedBox(height: 12),
-                    _buildField(
-                      label: 'Assayer / Inspector ID',
-                      controller: _inspectorIdCtrl,
-                      icon: Icons.badge_outlined,
-                      validator: (val) => val == null || val.isEmpty ? 'Required' : null,
-                    ),
-                    const SizedBox(height: 12),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: _buildField(
-                            label: 'Onion Variety',
-                            controller: _varietyCtrl,
-                            icon: Icons.grain,
-                            validator: (val) => val == null || val.isEmpty ? 'Required' : null,
-                          ),
+                            SizedBox(width: 6),
+                            Icon(Icons.arrow_forward, size: 16),
+                          ],
                         ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: _buildField(
-                            label: 'Lot Quantity',
-                            controller: _quantityCtrl,
-                            icon: Icons.scale,
-                            validator: (val) => val == null || val.isEmpty ? 'Required' : null,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 24),
-                    ElevatedButton(
-                      onPressed: _proceedToSampling,
-                      child: const Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text('Start Sampling'),
-                          SizedBox(width: 8),
-                          Icon(Icons.arrow_forward, size: 18),
-                        ],
                       ),
                     ),
                   ],
@@ -195,10 +228,40 @@ class _LotRegistrationScreenState extends State<LotRegistrationScreen> {
     );
   }
 
+  Widget _buildSectionHeader(String title) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 4, bottom: 8),
+      child: Text(
+        title,
+        style: const TextStyle(
+          fontSize: 13,
+          fontWeight: FontWeight.w700,
+          color: AppColors.navyDark,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildGroupCard(List<Widget> children) {
+    return Container(
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: AppColors.surface,
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: AppColors.border),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: children,
+      ),
+    );
+  }
+
   Widget _buildField({
     required String label,
     required TextEditingController controller,
     required IconData icon,
+    String? helperText,
     String? Function(String?)? validator,
   }) {
     return TextFormField(
@@ -206,6 +269,8 @@ class _LotRegistrationScreenState extends State<LotRegistrationScreen> {
       validator: validator,
       decoration: InputDecoration(
         labelText: label,
+        helperText: helperText,
+        helperStyle: const TextStyle(fontSize: 11, color: AppColors.navyMuted),
         prefixIcon: Icon(icon, size: 20, color: AppColors.navyMuted),
       ),
     );

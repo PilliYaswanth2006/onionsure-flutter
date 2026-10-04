@@ -20,7 +20,7 @@ class ProgressStepper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       color: AppColors.surface,
       child: Row(
         children: List.generate(steps.length * 2 - 1, (index) {
@@ -57,30 +57,32 @@ class ProgressStepper extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(
-                width: 26,
-                height: 26,
+                width: 24,
+                height: 24,
                 decoration: BoxDecoration(
                   color: bg,
                   shape: BoxShape.circle,
-                  border: Border.all(color: border, width: isCurrent ? 2 : 1),
+                  border: Border.all(color: border, width: isCurrent ? 1.5 : 1),
                 ),
                 alignment: Alignment.center,
                 child: isCompleted
-                    ? const Icon(Icons.check, size: 14, color: Colors.white)
+                    ? const Icon(Icons.check, size: 13, color: Colors.white)
                     : Text(
                         '$stepNum',
                         style: TextStyle(
-                          fontSize: 12,
+                          fontSize: 11,
                           fontWeight: FontWeight.w700,
                           color: text,
                         ),
                       ),
               ),
-              const SizedBox(height: 4),
+              const SizedBox(height: 3),
               Text(
                 steps[stepNum - 1],
+                maxLines: 1,
+                overflow: TextOverflow.clip,
                 style: TextStyle(
-                  fontSize: 10,
+                  fontSize: 9.5,
                   fontWeight: isCurrent ? FontWeight.w700 : FontWeight.w500,
                   color: isCurrent ? AppColors.tealDark : AppColors.navyMuted,
                 ),

@@ -54,7 +54,8 @@ class DynamicGradingConfig {
       diameterMaxMm: diameterMaxMm ?? this.diameterMaxMm,
       sproutingGradeAMax: sproutingGradeAMax ?? this.sproutingGradeAMax,
       rotGradeAMax: rotGradeAMax ?? this.rotGradeAMax,
-      surfaceDefectGradeAMax: surfaceDefectGradeAMax ?? this.surfaceDefectGradeAMax,
+      surfaceDefectGradeAMax:
+          surfaceDefectGradeAMax ?? this.surfaceDefectGradeAMax,
       undersizedGradeAMax: undersizedGradeAMax ?? this.undersizedGradeAMax,
       sproutingUrsMax: sproutingUrsMax ?? this.sproutingUrsMax,
       rotUrsMax: rotUrsMax ?? this.rotUrsMax,
@@ -67,27 +68,32 @@ class DynamicGradingConfig {
     return DynamicGradingConfig(
       diameterMinMm: (json['diameter_min_mm'] as num?)?.toInt() ?? 35,
       diameterMaxMm: (json['diameter_max_mm'] as num?)?.toInt() ?? 70,
-      sproutingGradeAMax: (json['sprouting_grade_a_max'] as num?)?.toDouble() ?? 0.0,
+      sproutingGradeAMax:
+          (json['sprouting_grade_a_max'] as num?)?.toDouble() ?? 0.0,
       rotGradeAMax: (json['rot_grade_a_max'] as num?)?.toDouble() ?? 0.0,
-      surfaceDefectGradeAMax: (json['surface_defect_grade_a_max'] as num?)?.toDouble() ?? 5.0,
-      undersizedGradeAMax: (json['undersized_grade_a_max'] as num?)?.toDouble() ?? 5.0,
+      surfaceDefectGradeAMax:
+          (json['surface_defect_grade_a_max'] as num?)?.toDouble() ?? 5.0,
+      undersizedGradeAMax:
+          (json['undersized_grade_a_max'] as num?)?.toDouble() ?? 5.0,
       sproutingUrsMax: (json['sprouting_urs_max'] as num?)?.toDouble() ?? 5.0,
       rotUrsMax: (json['rot_urs_max'] as num?)?.toDouble() ?? 3.0,
-      surfaceDefectUrsMax: (json['surface_defect_urs_max'] as num?)?.toDouble() ?? 15.0,
-      undersizedUrsMax: (json['undersized_urs_max'] as num?)?.toDouble() ?? 10.0,
+      surfaceDefectUrsMax:
+          (json['surface_defect_urs_max'] as num?)?.toDouble() ?? 15.0,
+      undersizedUrsMax:
+          (json['undersized_urs_max'] as num?)?.toDouble() ?? 10.0,
     );
   }
 
   Map<String, dynamic> toJson() => {
-    'diameter_min_mm': diameterMinMm,
-    'diameter_max_mm': diameterMaxMm,
-    'sprouting_grade_a_max': sproutingGradeAMax,
-    'rot_grade_a_max': rotGradeAMax,
-    'surface_defect_grade_a_max': surfaceDefectGradeAMax,
-    'undersized_grade_a_max': undersizedGradeAMax,
-    'sprouting_urs_max': sproutingUrsMax,
-    'rot_urs_max': rotUrsMax,
-    'surface_defect_urs_max': surfaceDefectUrsMax,
-    'undersized_urs_max': undersizedUrsMax,
-  };
+        'diameter_min_mm': diameterMinMm,
+        'diameter_max_mm': diameterMaxMm,
+        'sprouting_grade_a_max': sproutingGradeAMax,
+        'rot_grade_a_max': rotGradeAMax,
+        'surface_defect_grade_a_max': surfaceDefectGradeAMax,
+        'undersized_grade_a_max': undersizedGradeAMax,
+        'sprouting_urs_max': sproutingUrsMax,
+        'rot_urs_max': rotUrsMax,
+        'surface_defect_urs_max': surfaceDefectUrsMax,
+        'undersized_urs_max': undersizedUrsMax,
+      };
 }

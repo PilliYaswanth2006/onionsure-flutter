@@ -69,11 +69,41 @@ class _GradingConfigScreenState extends State<GradingConfigScreen> {
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Grading configuration saved locally.'),
+          content: Text('✓ Configuration saved locally'),
           backgroundColor: AppColors.tealPrimary,
+          duration: Duration(seconds: 2),
         ),
       );
       Navigator.of(context).pop();
+    }
+  }
+
+  Future<void> _confirmReset() async {
+    final confirm = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Reset Grading Rules'),
+        content: const Text(
+          'Are you sure you want to restore the default Nashik Red parameters? All custom tolerance thresholds will be reverted.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(false),
+            child: const Text('Cancel'),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.rejectRed,
+            ),
+            onPressed: () => Navigator.of(ctx).pop(true),
+            child: const Text('Reset Defaults'),
+          ),
+        ],
+      ),
+    );
+
+    if (confirm == true) {
+      await _resetDefaults();
     }
   }
 
@@ -100,11 +130,12 @@ class _GradingConfigScreenState extends State<GradingConfigScreen> {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        title: const Text('Grading Configuration'),
+        title: const Text('Grading Rules'),
         actions: [
           TextButton(
-            onPressed: _resetDefaults,
-            child: const Text('Reset', style: TextStyle(color: AppColors.rejectRed)),
+            onPressed: _confirmReset,
+            child: const Text('Reset',
+                style: TextStyle(color: AppColors.rejectRed)),
           ),
         ],
       ),
@@ -114,12 +145,14 @@ class _GradingConfigScreenState extends State<GradingConfigScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const DisclaimerBanner.warning(
-              message: 'Prototype Configuration: Dynamic rules configured here evaluate field lots. Saving an inspection creates an immutable snapshot of rules used.',
+              message:
+                  'Prototype Configuration: Dynamic rules configured here evaluate field lots. Saving an inspection creates an immutable snapshot of rules used.',
             ),
             const SizedBox(height: 16),
 
-            // Sizing Criteria
-            _buildSectionHeader('1. Size / Metric Calibration (Nashik Red Standard)'),
+            // 01 Sizing Criteria
+            _buildSectionHeader(
+                '01 · Size / Metric Calibration (Nashik Red Standard)'),
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
@@ -136,7 +169,8 @@ class _GradingConfigScreenState extends State<GradingConfigScreen> {
                     max: 50,
                     divisions: 25,
                     unit: 'mm',
-                    onChanged: (val) => setState(() => _diameterMin = val.toInt()),
+                    onChanged: (val) =>
+                        setState(() => _diameterMin = val.toInt()),
                   ),
                   const Divider(height: 16, color: AppColors.border),
                   _buildSlider(
@@ -146,7 +180,8 @@ class _GradingConfigScreenState extends State<GradingConfigScreen> {
                     max: 90,
                     divisions: 35,
                     unit: 'mm',
-                    onChanged: (val) => setState(() => _diameterMax = val.toInt()),
+                    onChanged: (val) =>
+                        setState(() => _diameterMax = val.toInt()),
                   ),
                 ],
               ),
@@ -154,7 +189,8 @@ class _GradingConfigScreenState extends State<GradingConfigScreen> {
             const SizedBox(height: 16),
 
             // Grade A Tolerances
-            _buildSectionHeader('2. Grade A Quality Tolerances (Strict Mandi Standard)'),
+            _buildSectionHeader(
+                '02 · Grade A Quality Tolerances (Strict Mandi Standard)'),
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
@@ -175,7 +211,7 @@ class _GradingConfigScreenState extends State<GradingConfigScreen> {
                   ),
                   const Divider(height: 16, color: AppColors.border),
                   _buildSlider(
-                    label: 'Max Severe Defect / Rot (%)',
+                    label: 'Max Severe Visible Defect (%)',
                     value: _rotGradeA,
                     min: 0,
                     max: 5,
@@ -191,7 +227,8 @@ class _GradingConfigScreenState extends State<GradingConfigScreen> {
                     max: 20,
                     divisions: 20,
                     unit: '%',
-                    onChanged: (val) => setState(() => _surfaceDefectGradeA = val),
+                    onChanged: (val) =>
+                        setState(() => _surfaceDefectGradeA = val),
                   ),
                   const Divider(height: 16, color: AppColors.border),
                   _buildSlider(
@@ -209,7 +246,7 @@ class _GradingConfigScreenState extends State<GradingConfigScreen> {
             const SizedBox(height: 16),
 
             // URS Tolerances
-            _buildSectionHeader('3. Under-Relaxed Specifications (URS)'),
+            _buildSectionHeader('03 · Under-Relaxed Specifications (URS)'),
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
@@ -230,7 +267,7 @@ class _GradingConfigScreenState extends State<GradingConfigScreen> {
                   ),
                   const Divider(height: 16, color: AppColors.border),
                   _buildSlider(
-                    label: 'URS Max Severe Defect / Rot (%)',
+                    label: 'URS Max Severe Visible Defect (%)',
                     value: _rotUrs,
                     min: 1,
                     max: 10,
@@ -263,15 +300,19 @@ class _GradingConfigScreenState extends State<GradingConfigScreen> {
             ),
             const SizedBox(height: 24),
 
-            ElevatedButton(
-              onPressed: _saveConfig,
-              child: const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.save, size: 18),
-                  SizedBox(width: 8),
-                  Text('Save Configuration'),
-                ],
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  minimumSize: const Size(0, 48),
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                ),
+                onPressed: _saveConfig,
+                icon: const Icon(Icons.save, size: 18),
+                label: const Text(
+                  'Save Configuration',
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                ),
               ),
             ),
           ],
@@ -307,12 +348,17 @@ class _GradingConfigScreenState extends State<GradingConfigScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              label,
-              style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: AppColors.navyText),
+            Expanded(
+              child: Text(
+                label,
+                style: const TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.navyText),
+              ),
             ),
+            const SizedBox(width: 8),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
               decoration: BoxDecoration(
@@ -321,7 +367,10 @@ class _GradingConfigScreenState extends State<GradingConfigScreen> {
               ),
               child: Text(
                 '${value.toStringAsFixed(value == value.roundToDouble() ? 0 : 1)} $unit',
-                style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: AppColors.tealDark),
+                style: const TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.tealDark),
               ),
             ),
           ],

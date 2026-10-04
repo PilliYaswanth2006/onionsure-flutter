@@ -16,16 +16,14 @@ class DatasetService {
 
     String jsonString;
     try {
-      // Primary: Flutter asset bundle
-      jsonString = await rootBundle.loadString('assets/data/samples.json');
-    } catch (e) {
-      // Fallback for standalone/test environments
       final file = File('assets/data/samples.json');
-      if (await file.exists()) {
-        jsonString = await file.readAsString();
+      if (file.existsSync()) {
+        jsonString = file.readAsStringSync();
       } else {
-        throw Exception('samples.json not found in bundle or file system: $e');
+        jsonString = await rootBundle.loadString('assets/data/samples.json');
       }
+    } catch (e) {
+      jsonString = await rootBundle.loadString('assets/data/samples.json');
     }
 
     final dynamic parsed = json.decode(jsonString);

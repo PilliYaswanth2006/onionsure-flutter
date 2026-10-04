@@ -25,16 +25,16 @@ class QrVerificationData {
   });
 
   Map<String, dynamic> toJson() => {
-    'insp': inspectionId,
-    'lot': lotId,
-    'farmer': farmer,
-    'centre': centre,
-    'date': date,
-    'samples': sampleCount,
-    'onions': totalOnions,
-    'grade': finalAssessment,
-    'hash': verificationHash,
-  };
+        'insp': inspectionId,
+        'lot': lotId,
+        'farmer': farmer,
+        'centre': centre,
+        'date': date,
+        'samples': sampleCount,
+        'onions': totalOnions,
+        'grade': finalAssessment,
+        'hash': verificationHash,
+      };
 
   factory QrVerificationData.fromJson(Map<String, dynamic> json) {
     return QrVerificationData(
@@ -58,8 +58,10 @@ class QrService {
   static String generateVerificationPayload(InspectionModel inspection) {
     final dateStr = inspection.timestamp.toIso8601String().substring(0, 10);
     // Simple deterministic hash representation of the report
-    final rawHashSource = '${inspection.inspectionId}:${inspection.lotId}:${inspection.finalResult}:${inspection.aggregatedResult.totalOnions}';
-    final simpleHash = 'HASH-${rawHashSource.hashCode.toRadixString(16).toUpperCase()}';
+    final rawHashSource =
+        '${inspection.inspectionId}:${inspection.lotId}:${inspection.finalResult}:${inspection.aggregatedResult.totalOnions}';
+    final simpleHash =
+        'HASH-${rawHashSource.hashCode.toRadixString(16).toUpperCase()}';
 
     final data = QrVerificationData(
       inspectionId: inspection.inspectionId,

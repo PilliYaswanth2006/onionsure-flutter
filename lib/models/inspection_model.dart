@@ -27,13 +27,24 @@ class AggregatedQualityResult {
     required this.combinedDiameters,
   });
 
-  double get healthyPercent => totalOnions > 0 ? (totalHealthy / totalOnions) * 100 : 0.0;
-  double get surfaceDefectPercent => totalOnions > 0 ? (totalSurfaceDefect / totalOnions) * 100 : 0.0;
-  double get severeDefectPercent => totalOnions > 0 ? (totalSevereDefect / totalOnions) * 100 : 0.0;
-  double get sproutingPercent => totalOnions > 0 ? (totalSprouting / totalOnions) * 100 : 0.0;
-  double get undersizedPercent => totalOnions > 0 ? (totalUndersized / totalOnions) * 100 : 0.0;
+  double get healthyPercent =>
+      totalOnions > 0 ? (totalHealthy / totalOnions) * 100 : 0.0;
+  double get surfaceDefectPercent =>
+      totalOnions > 0 ? (totalSurfaceDefect / totalOnions) * 100 : 0.0;
+  double get severeDefectPercent =>
+      totalOnions > 0 ? (totalSevereDefect / totalOnions) * 100 : 0.0;
+  double get sproutingPercent =>
+      totalOnions > 0 ? (totalSprouting / totalOnions) * 100 : 0.0;
+  double get undersizedPercent =>
+      totalOnions > 0 ? (totalUndersized / totalOnions) * 100 : 0.0;
 
-  bool get isValid => (totalHealthy + totalSurfaceDefect + totalSevereDefect + totalSprouting + totalUndersized) == totalOnions;
+  bool get isValid =>
+      (totalHealthy +
+          totalSurfaceDefect +
+          totalSevereDefect +
+          totalSprouting +
+          totalUndersized) ==
+      totalOnions;
 
   factory AggregatedQualityResult.fromJson(Map<String, dynamic> json) {
     final diams = (json['combined_diameters'] as List<dynamic>? ?? [])
@@ -55,17 +66,17 @@ class AggregatedQualityResult {
   }
 
   Map<String, dynamic> toJson() => {
-    'total_onions': totalOnions,
-    'total_healthy': totalHealthy,
-    'total_surface_defect': totalSurfaceDefect,
-    'total_severe_defect': totalSevereDefect,
-    'total_sprouting': totalSprouting,
-    'total_undersized': totalUndersized,
-    'avg_diameter': avgDiameter,
-    'min_diameter': minDiameter,
-    'max_diameter': maxDiameter,
-    'combined_diameters': combinedDiameters,
-  };
+        'total_onions': totalOnions,
+        'total_healthy': totalHealthy,
+        'total_surface_defect': totalSurfaceDefect,
+        'total_severe_defect': totalSevereDefect,
+        'total_sprouting': totalSprouting,
+        'total_undersized': totalUndersized,
+        'avg_diameter': avgDiameter,
+        'min_diameter': minDiameter,
+        'max_diameter': maxDiameter,
+        'combined_diameters': combinedDiameters,
+      };
 }
 
 class InspectionModel {
@@ -177,21 +188,21 @@ class InspectionModel {
   }
 
   Map<String, dynamic> toJson() => {
-    'inspection_id': inspectionId,
-    'lot_id': lotId,
-    'farmer_name': farmerName,
-    'procurement_centre': procurementCentre,
-    'inspector_id': inspectorId,
-    'onion_variety': onionVariety,
-    'lot_quantity': lotQuantity,
-    'timestamp': timestamp.toIso8601String(),
-    'selected_sample_ids': selectedSampleIds,
-    'aggregated_result': aggregatedResult.toJson(),
-    'rules_used': rulesUsed.toJson(),
-    'engine_result': engineResult,
-    'engine_explanations': engineExplanations,
-    'final_result': finalResult,
-    'human_review': humanReview?.toJson(),
-    'sync_status': syncStatus,
-  };
+        'inspection_id': inspectionId,
+        'lot_id': lotId,
+        'farmer_name': farmerName,
+        'procurement_centre': procurementCentre,
+        'inspector_id': inspectorId,
+        'onion_variety': onionVariety,
+        'lot_quantity': lotQuantity,
+        'timestamp': timestamp.toIso8601String(),
+        'selected_sample_ids': selectedSampleIds,
+        'aggregated_result': aggregatedResult.toJson(),
+        'rules_used': rulesUsed.toJson(),
+        'engine_result': engineResult,
+        'engine_explanations': engineExplanations,
+        'final_result': finalResult,
+        'human_review': humanReview?.toJson(),
+        'sync_status': syncStatus,
+      };
 }

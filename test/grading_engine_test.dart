@@ -26,7 +26,8 @@ void main() {
 
       expect(decision.outcome, equals('Grade A'));
       expect(decision.requiresReview, isFalse);
-      expect(decision.ruleChecks.any((c) => c.contains('Grade A limit')), isTrue);
+      expect(
+          decision.ruleChecks.any((c) => c.contains('Grade A limit')), isTrue);
     });
 
     test('Trigger Review Required for Severe Defect / Rot', () {
@@ -50,6 +51,8 @@ void main() {
 
       expect(decision.requiresReview, isTrue);
       expect(decision.reviewReason, isNotNull);
+      expect(decision.failureReasons,
+          contains('Severe Visible Defect: 4.0% > 3.0%'));
     });
 
     test('Rejection when Exceeding URS Tolerances', () {
@@ -73,6 +76,7 @@ void main() {
 
       expect(decision.outcome, equals('Reject'));
       expect(decision.requiresReview, isTrue);
+      expect(decision.failureReasons, contains('Sprouting: 30.0% > 5.0%'));
     });
   });
 }

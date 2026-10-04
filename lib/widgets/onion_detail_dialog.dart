@@ -32,7 +32,7 @@ class OnionDetailDialog extends StatelessWidget {
       String classification = 'Healthy';
       String defect = 'None';
       if (severeLeft > 0) {
-        classification = 'Severe Defect';
+        classification = 'Severe Visible Defect';
         defect = 'Visible Rot / Deep Infection';
         severeLeft--;
       } else if (sproutingLeft > 0) {
@@ -107,7 +107,8 @@ class OnionDetailDialog extends StatelessWidget {
               ),
               const SizedBox(height: 12),
               const DisclaimerBanner.warning(
-                message: 'Demo Measurement: Production deployment requires validated metric calibration (Calibration Status: demo_estimate).',
+                message:
+                    'Demo Measurement: Production deployment requires validated metric calibration (Calibration Status: demo_estimate).',
               ),
               const SizedBox(height: 12),
               // Measurement Summary
@@ -121,10 +122,13 @@ class OnionDetailDialog extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    _metricCol('Avg Diameter', '${analysis.avgDiameter.toStringAsFixed(1)} mm'),
-                    Container(height: 24, width: 1, color: AppColors.borderSubtle),
+                    _metricCol('Avg Diameter',
+                        '${analysis.avgDiameter.toStringAsFixed(1)} mm'),
+                    Container(
+                        height: 24, width: 1, color: AppColors.borderSubtle),
                     _metricCol('Min Diameter', '${analysis.minDiameter} mm'),
-                    Container(height: 24, width: 1, color: AppColors.borderSubtle),
+                    Container(
+                        height: 24, width: 1, color: AppColors.borderSubtle),
                     _metricCol('Max Diameter', '${analysis.maxDiameter} mm'),
                   ],
                 ),
@@ -145,79 +149,81 @@ class OnionDetailDialog extends StatelessWidget {
                   separatorBuilder: (_, __) => const SizedBox(height: 8),
                   itemBuilder: (context, index) {
                     final item = onionRecords[index];
+                    final classification = item['classification'] ?? 'Healthy';
+
+                    Color tagColor = AppColors.healthyGreen;
+                    if (classification.contains('Severe')) {
+                      tagColor = AppColors.rejectRed;
+                    } else if (classification.contains('Sprouting') ||
+                        classification.contains('Surface')) {
+                      tagColor = AppColors.warningAmber;
+                    } else if (classification.contains('Undersized')) {
+                      tagColor = AppColors.infoBlue;
+                    }
+
                     return Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                      padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
                         color: AppColors.surface,
                         borderRadius: BorderRadius.circular(8),
                         border: Border.all(color: AppColors.border),
                       ),
-                      child: Row(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
-                            width: 36,
-                            height: 36,
-                            decoration: BoxDecoration(
-                              color: AppColors.tealLight,
-                              borderRadius: BorderRadius.circular(6),
-                            ),
-                            alignment: Alignment.center,
-                            child: Text(
-                              '#${index + 1}',
-                              style: const TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w700,
-                                color: AppColors.tealDark,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                '#${(index + 1).toString().padLeft(2, '0')} · ${item['id']}',
+                                style: const TextStyle(
+                                  fontSize: 12.5,
+                                  fontWeight: FontWeight.w700,
+                                  color: AppColors.navyDark,
+                                ),
                               ),
-                            ),
+                              Text(
+                                '${item['diameter']}',
+                                style: const TextStyle(
+                                  fontSize: 12.5,
+                                  fontWeight: FontWeight.w700,
+                                  color: AppColors.tealDark,
+                                ),
+                              ),
+                            ],
                           ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      item['id']!,
-                                      style: const TextStyle(
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w600,
-                                        color: AppColors.navyDark,
-                                      ),
-                                    ),
-                                    Text(
-                                      'Ø ${item['diameter']}',
-                                      style: const TextStyle(
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w700,
-                                        color: AppColors.tealPrimary,
-                                      ),
-                                    ),
-                                  ],
+                          const SizedBox(height: 6),
+                          Wrap(
+                            spacing: 6,
+                            runSpacing: 4,
+                            crossAxisAlignment: WrapCrossAlignment.center,
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 6, vertical: 2),
+                                decoration: BoxDecoration(
+                                  color: tagColor.withValues(alpha: 0.15),
+                                  borderRadius: BorderRadius.circular(4),
+                                  border: Border.all(
+                                      color: tagColor.withValues(alpha: 0.4)),
                                 ),
-                                const SizedBox(height: 2),
-                                Row(
-                                  children: [
-                                    Text(
-                                      'Classification: ${item['classification']} ',
-                                      style: const TextStyle(
-                                        fontSize: 11,
-                                        color: AppColors.navyText,
-                                      ),
-                                    ),
-                                    Text(
-                                      '(${item['defect']})',
-                                      style: const TextStyle(
-                                        fontSize: 11,
-                                        color: AppColors.navyMuted,
-                                      ),
-                                    ),
-                                  ],
+                                child: Text(
+                                  classification,
+                                  style: TextStyle(
+                                    fontSize: 10.5,
+                                    fontWeight: FontWeight.w700,
+                                    color: tagColor,
+                                  ),
                                 ),
-                              ],
-                            ),
+                              ),
+                              Text(
+                                '• ${item['defect']}',
+                                style: const TextStyle(
+                                  fontSize: 10.5,
+                                  color: AppColors.navyMuted,
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
